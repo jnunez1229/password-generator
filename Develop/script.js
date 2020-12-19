@@ -1,4 +1,3 @@
-// Assignment code here
 // Characters to be used in password
 var char = {
   lowerCase: "abcdefghijklmnopqrstuvwxyz",
@@ -7,41 +6,58 @@ var char = {
   specChar: "!@#$%^&*()"
 }
 
-// User chooses what characters they want in password
+// User chooses what characters they want to use in password
 let criteria = function() {
 
   let chosenChar = "";
-  let promptLower = confirm('Do you want lowercase letters in your password?');
-  let promptUpper = confirm('Do you want uppercase letters in your password?');
-  let promptNum = confirm('Do you want numbers in your password?');
-  let promptSpec = confirm('Do you want special characters in your password?');
+
+  // confirm lowercase
+  let confirmLower = confirm('Do you want lowercase letters in your password?');
+  if(confirmLower === true){
+    alert("You have chosen to include lowercase letters in your password");
+    chosenChar = chosenChar + char.lowerCase;
+  }else{
+    alert("You have chosen to NOT include lowercase letters in your password")
+  }
+
+  // confirm uppercase
+  let confirmUpper = confirm('Do you want uppercase letters in your password?');
+  if(confirmUpper === true){
+    alert("You have chosen to include uppercase letters in your password");
+    chosenChar = chosenChar + char.upperCase;
+  }else{
+    alert("You have chosen to NOT include uppercase letters in your password")
+  }
+
+  // confirm numbers
+  let confirmNum = confirm('Do you want numbers in your password?');
+  if(confirmNum === true){
+    alert("You have chosen to include numbers in your password");
+    chosenChar = chosenChar + char.num;
+  }else{
+    alert("You have chosen to NOT include numbers in your password")
+  }
+
+  // confirm special characters
+  let confirmSpec = confirm('Do you want special characters in your password?');
+  if(confirmSpec === true){
+    alert("You have chosen to include special characters in your password");
+    chosenChar = chosenChar + char.specChar;
+  }else{
+    alert("You have chosen to NOT include special characters in your password");
+  }
+
 
   //  If all answers === false, repeat function
-  if(promptLower === false && promptUpper === false && promptNum === false && promptSec === false){
+  if(confirmLower === false && confirmUpper === false && confirmNum === false && confirmSpec === false){
     alert("Please select at least one type of character");
     criteria();
-  }
-
-  if(promptLower === true){
-    chosenChar = chosenChar + char.lowerCase;
-  }
-
-  if(promptUpper === true){
-    chosenChar = chosenChar + char.upperCase;
-  }
-
-  if(promptNum === true){
-    chosenChar = chosenChar + char.num;
-  }
-
-  if(promptSpec === true){
-    chosenChar = chosenChar + char.specChar;
   }
 
   return chosenChar;
 };
 
-// Prompt for the length of the password
+// Prompt for the desired length of the password
 let passLength = function(){
   let promptLength = prompt("How long do you want your password to be? Please enter a number between 8 and 128");
   promptLength = parseInt(promptLength);
@@ -55,27 +71,21 @@ let passLength = function(){
   }
 }
 
-
-
-
 // Generates password using criteria selected
 function generatePassword(){
-  let num = passLength();
   let pass = "";
-  let str = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$`;
+  let chosenLength = passLength();
+  let userCriteria = criteria();
 
-  for(i = 1; i <= num; i++){
-    debugger;
-    let char = Math.floor(Math.random() * str.length +1);
+  for(i = 1; i <= chosenLength; i++){
+    // debugger;
+    let char = Math.floor(Math.random() * userCriteria.length +1);
 
-    pass += str.charAt(char);
+    pass += userCriteria.charAt(char);
   }
 return pass;
 }
-// WHEN prompted for character types to include in the password: choose lowercase, uppercase, numeric, and/or special characters
-// Input should be validated and at least one character type should be selected
-// THEN a password is generated that matches the selected criteria after prompts are answered
-// XXGenerate password display in an alert or written to the page
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
